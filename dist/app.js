@@ -15,7 +15,7 @@ var citySelector = document.getElementById('citySelector');
 
 var dataSelector = document.getElementById('dataSelector');
 
-var dataUrl = 'districts.json';
+var dataUrl = '../assets/data/district_data.json';
 
 var baseColors = {
   zero: ['#e5a2a2', '#e57c7c', '#e55a5a', '#e53b3b', '#e52020', '#e50000'],
@@ -67,7 +67,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 }).addTo(map);
 
 function mapData(dataSet, dataType){
-  
+
   dataSet.data.map(function(data){
     console.log("Scores: " + data.score0_49 + ' ' + data.score50_69 + ' ' + data.score70_89 + ' ' + data.score90_100);
     var color = '#000';
@@ -144,4 +144,3 @@ function mapData(dataSet, dataType){
     polygon.on('click', onMapClick);
   });
 }
-

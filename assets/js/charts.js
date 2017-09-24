@@ -42,5 +42,3 @@ var selectors = ['age', 'gender', 'race', 'income', 'score'];
 selectors.forEach(s => {
     Highcharts.chart(s, config);
 });
-
-console.log(data)
