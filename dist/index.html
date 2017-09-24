@@ -75,8 +75,16 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
                                 <div class="card-content" style="height:350px">
-                                    <h2 class="category" style="text-align:center">Age</h2>
-                                    <div id="age" style="height:220px"></div>
+                                    <h2 class="category" style="text-align:center">Age > 65</h2>
+                                    <div id="ageOver65" style="height:220px"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-content" style="height:350px">
+                                    <h2 class="category" style="text-align:center">Age < 10</h2>
+                                    <div id="ageUnder10" style="height:220px"></div>
                                 </div>
                             </div>
                         </div>
@@ -96,14 +104,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-content" style="height:350px">
-                                    <h2 class="category" style="text-align:center">Income</h2>
-                                    <div id="income" style="height:220px"></div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-6">
@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Number of people</p>
-                                    <h2 class="title">49,000
+                                    <h2 id="population" class="title">49,000
                                         <small>people</small>
                                     </h2>
                                 </div>
@@ -125,8 +125,8 @@
                                     <i class="material-icons">store</i>
                                 </div>
                                 <div class="card-content">
-                                    <p class="category">Funding spent</p>
-                                    <h2 class="title">$34,245</h2>
+                                    <p class="category">Funding</p>
+                                    <h2 id="funding" class="title">$34,245</h2>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="card-content">
                                     <p class="category">Number of service providers</p>
-                                    <h2 class="title">75</h2>
+                                    <h2 id="services" class="title">75</h2>
                                 </div>
                             </div>
                         </div>

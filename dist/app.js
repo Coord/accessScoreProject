@@ -25,9 +25,17 @@ var dataUrl = urlDistricts;
 
 var currentSet;
 
+function reset() {
+  // initialization
+  var data = currentSet.data.filter(d => d.id === 'all')[0];
+  updateCharts(data);
+  updateNumbers(data);
+}
+
 var dataSeattle = axios.get(dataUrl).then(function(response){
   mapData(response);
   currentSet = response;
+  reset();
 });
 
 function deselectDistricts(){
@@ -59,6 +67,10 @@ function useDistrictData(districtId, district){
   // DO COOL STUFF HERE WITH THE DATA
   console.log("District ID: " + districtId);
   console.log("District Mean: " + district.options.mean);
+  var data = currentSet.data[+districtId-1];
+  debugger
+  updateCharts(data);
+  updateNumbers(data);
 }
 
 function onMapClick(event){
@@ -79,12 +91,14 @@ dataSelector.onchange = function(event){
     dataSeattle = axios.get(dataUrl).then(function(response){
       mapData(response);
       currentSet = response;
+      reset();
     });
   } else if(newMapType === "districts"){
     dataUrl = urlDistricts;
     dataSeattle = axios.get(dataUrl).then(function(response){
       mapData(response);
       currentSet = response;
+      reset();
     });
   }
 }
