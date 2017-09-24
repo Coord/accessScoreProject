@@ -20,8 +20,9 @@
 #map {
     position: relative;
     width: 100%;
-    height: calc(100% - 60px);
-    margin-top: 70px;
+    /*height: calc(100% - 60px);*/
+    height: 70vh;
+    /*margin-top: 70px;*/
 }
 
 .places-buttons .btn {
