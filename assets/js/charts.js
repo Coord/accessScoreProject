@@ -19,6 +19,9 @@ var config = {
         }
     },
     series: [{
+        animation: {
+            duration: 3000
+        },
         type: 'pie',
         name: 'Browser share',
         size: "100%",
@@ -35,7 +38,7 @@ var config = {
     }
 }
 
-var selectors = ['age', 'gender', 'race', 'income'];
+var selectors = ['age', 'gender', 'race', 'income', 'score'];
 selectors.forEach(s => {
     Highcharts.chart(s, config);
 });
