@@ -90,23 +90,23 @@ function updateNumbers(data, currentSet) {
     var text = 'Coming Soon';
     if (data) {
       if (s === 'population') {
-        text = data.pop.toLocaleString();
+        text = data.pop_total.toLocaleString();
       }
       if (s === 'score') {
         text = data.score_mean;
         histogramConfig.series[0].name = currentSet.data.length > 8 ? "Neighborhood Population %" : "District Population %";
         histogramConfig.series[0].data = [
-          ['Poor', toPercent(data.score0_49, data.pop, true)],
-          ['Fair', toPercent(data.score50_69, data.pop, true)],
-          ['Good', toPercent(data.score70_89, data.pop, true)],
-          ['Excellent', toPercent(data.score90_100, data.pop, true)]
+          ['Poor', toPercent(data.score0_49, data.pop_total, true)],
+          ['Fair', toPercent(data.score50_69, data.pop_total, true)],
+          ['Good', toPercent(data.score70_89, data.pop_total, true)],
+          ['Excellent', toPercent(data.score90_100, data.pop_total, true)]
         ];
         var all = currentSet.data.filter(d => d.id === 'all')[0];
         histogramConfig.series[1].data = [
-          ['Poor', toPercent(all.score0_49, all.pop, true)],
-          ['Fair', toPercent(all.score50_69, all.pop, true)],
-          ['Good', toPercent(all.score70_89, all.pop, true)],
-          ['Excellent', toPercent(all.score90_100, all.pop, true)]
+          ['Poor', toPercent(all.score0_49, all.pop_total, true)],
+          ['Fair', toPercent(all.score50_69, all.pop_total, true)],
+          ['Good', toPercent(all.score70_89, all.pop_total, true)],
+          ['Excellent', toPercent(all.score90_100, all.pop_total, true)]
         ];
         Highcharts.chart('scoreDistribution', histogramConfig);
       }
@@ -129,32 +129,32 @@ function updateCharts(data) {
       config.series[0].name = s.charAt(0).toUpperCase() + s.slice(1);
       if (s === 'ageOver65') {
         config.series[0].name = "Age";
-        config.title.text = toPercent(data.pop_over_65, data.pop);
+        config.title.text = toPercent(data.pop_over_65, data.pop_total);
         config.series[0].data = [
           ['Over 65', data.pop_over_65],
-          ['Under 65', data.pop - data.pop_over_65]
+          ['Under 65', data.pop_total - data.pop_over_65]
         ];
       }
       if (s === 'gender') {
-        config.title.text = toPercent(data.pop_female, data.pop);
+        config.title.text = toPercent(data.pop_female, data.pop_total);
         config.series[0].data = [
           ['Female', data.pop_female],
-          ['Male', data.pop - data.pop_female]
+          ['Male', data.pop_total - data.pop_female]
         ];
       }
       if (s === 'race') {
-        config.title.text = toPercent(data.pop_color, data.pop);
+        config.title.text = toPercent(data.pop_color, data.pop_total);
         config.series[0].data = [
           ['Population of color', data.pop_color],
-          ['Other', data.pop - data.pop_color]
+          ['Other', data.pop_total - data.pop_color]
         ];
       }
       if (s === 'ageUnder10') {
         config.series[0].name = "Age";
-        config.title.text = toPercent(data.pop_below_10, data.pop);
+        config.title.text = toPercent(data.pop_below_10, data.pop_total);
         config.series[0].data = [
           ['Under 10', data.pop_below_10],
-          ['Over 10', data.pop - data.pop_below_10]
+          ['Over 10', data.pop_total - data.pop_below_10]
         ];
       }
       Highcharts.chart(s, config);

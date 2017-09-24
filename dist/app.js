@@ -68,7 +68,6 @@ function useDistrictData(districtId, district){
   // console.log("District ID: " + districtId);
   // console.log("District Mean: " + district.options.mean);
   var data = currentSet.data[+districtId-1];
-  // debugger
   updateCharts(data);
   updateNumbers(data, currentSet);
 }
