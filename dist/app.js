@@ -29,7 +29,7 @@ function reset() {
   // initialization
   var data = currentSet.data.filter(d => d.id === 'all')[0];
   updateCharts(data);
-  updateNumbers(data);
+  updateNumbers(data, currentSet);
 }
 
 var dataSeattle = axios.get(dataUrl).then(function(response){
@@ -70,7 +70,7 @@ function useDistrictData(districtId, district){
   var data = currentSet.data[+districtId-1];
   debugger
   updateCharts(data);
-  updateNumbers(data);
+  updateNumbers(data, currentSet);
 }
 
 function onMapClick(event){

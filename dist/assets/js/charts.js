@@ -1,4 +1,4 @@
-var config = {
+var donutConfig = {
     title: {
         text: '15%',
         style: {
@@ -38,27 +38,93 @@ var config = {
     }
 }
 
-var chartSelectors = ['ageOver65', 'ageUnder10', 'gender', 'race'];
-var numberSelectors = ['population', 'funding', 'services'];
+var histogramConfig = {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Distribution'
+    },
+    xAxis: {
+        type: 'category',
+        labels: {
+            rotation: -45,
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Population %'
+        }
+    },
+    tooltip: {
+        pointFormat: 'Population: <b>{point.y:.1f}</b>'
+    },
+    series: [{
+        name: 'Regional Population %',
+        dataLabels: {
+            enabled: true,
+            format: '{point.y:.1f}%'
+        }
+    },{
+        name: 'City Population %',
+        dataLabels: {
+            enabled: true,
+            format: '{point.y:.1f}%'
+        }
+    }],
+    credits: {
+      enabled: false
+    }
+}
 
-function updateNumbers(data) {
+var chartSelectors = ['ageOver65', 'ageUnder10', 'gender', 'race'];
+var numberSelectors = ['population', 'funding', 'services', 'score'];
+
+function updateNumbers(data, currentSet) {
   numberSelectors.forEach(s => {
     var text = 'Coming Soon';
     if (data) {
       if (s === 'population') {
         text = data.pop.toLocaleString();
       }
+      if (s === 'score') {
+        text = data.score_mean;
+        histogramConfig.series[0].name = currentSet.data.length > 8 ? "Neighborhood Population %" : "District Population %";
+        histogramConfig.series[0].data = [
+          ['Poor', toPercent(data.score0_49, data.pop, true)],
+          ['Fair', toPercent(data.score50_69, data.pop, true)],
+          ['Good', toPercent(data.score70_89, data.pop, true)],
+          ['Excellent', toPercent(data.score90_100, data.pop, true)]
+        ];
+        var all = currentSet.data.filter(d => d.id === 'all')[0];
+        histogramConfig.series[1].data = [
+          ['Poor', toPercent(all.score0_49, all.pop, true)],
+          ['Fair', toPercent(all.score50_69, all.pop, true)],
+          ['Good', toPercent(all.score70_89, all.pop, true)],
+          ['Excellent', toPercent(all.score90_100, all.pop, true)]
+        ];
+        Highcharts.chart('scoreDistribution', histogramConfig);
+      }
     }
     $('#' + s).text(text);
   });
 }
 
-function toPercent(num1, num2) {
+function toPercent(num1, num2, asNumber) {
+  if (asNumber) {
+    return Math.floor(num1 / num2 * 100);
+  }
   return (num1 / num2 * 100).toFixed(1) + "%";
 }
 
 function updateCharts(data) {
   if (!data) return;
+  var config = donutConfig;
   chartSelectors.forEach(s => {
       config.series[0].name = s.charAt(0).toUpperCase() + s.slice(1);
       if (s === 'ageOver65') {
