@@ -92,6 +92,9 @@ function updateNumbers(data, currentSet) {
       if (s === 'population') {
         text = data.pop_total.toLocaleString();
       }
+      if (s === 'funding') {
+        text = '$' + Math.floor(data.investment).toLocaleString();
+      }
       if (s === 'score') {
         text = data.score_mean;
         histogramConfig.series[0].name = currentSet.data.length > 8 ? "Neighborhood Population %" : "District Population %";
