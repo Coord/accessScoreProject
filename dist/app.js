@@ -1,6 +1,5 @@
 
 
-
 var lat = 47.609037;
 var lng = -122.334544;
 
@@ -8,7 +7,12 @@ var citySelector = document.getElementById('citySelector');
 
 var dataSelector = document.getElementById('dataSelector');
 
-var dataUrl = '../assets/data/district_data.json';
+var urlDistricts = '../assets/data/district_data.json';
+var urlNeighborhoods = '../assets/data/neighborhood_data.json';
+
+var dataUrl = urlDistricts;
+
+
 
 // var baseColors = {
 //   zero: ['#e5a2a2', '#e57c7c', '#e55a5a', '#e53b3b', '#e52020', '#e50000'],
@@ -39,7 +43,13 @@ function setDistrict(district){
   district.setStyle({fillOpacity: 0.7});
 }
 
-
+function clearMap(){
+  map.eachLayer(function(layer){
+    if(layer.options.type === 'dataPoint'){
+      map.removeLayer(layer);
+    }
+  });
+}
 
 /*
 Andy,
@@ -58,19 +68,37 @@ function onMapClick(event){
     setDistrict(event.target);
     useDistrictData(event.target.options.id, event.target);
   }
-  dataSelector.value = event.target.options.id;
 }
 
-
+// Dropdown menu event handler
 dataSelector.onchange = function(event){
-  deselectDistricts();
-  map.eachLayer(function(layer){
-    if(layer.options.type === 'dataPoint' && layer.options.id === dataSelector.value){
-      layer.setStyle({fillOpacity: 0.7});
-      useDistrictData(layer.options.id, layer);
-    }
-  });
+  clearMap();
+  var newMapType = event.target.value;
+  console.log(newMapType);
+  if(newMapType === "neighborhoods"){
+    dataUrl = urlNeighborhoods;
+    dataSeattle = axios.get(dataUrl).then(function(response){
+      mapData(response);
+      currentSet = response;
+    });
+  } else if(newMapType === "districts"){
+    dataUrl = urlDistricts;
+    dataSeattle = axios.get(dataUrl).then(function(response){
+      mapData(response);
+      currentSet = response;
+    });
+  }
 }
+
+// dataSelector.onchange = function(event){
+//   deselectDistricts();
+//   map.eachLayer(function(layer){
+//     if(layer.options.type === 'dataPoint' && layer.options.id === dataSelector.value){
+//       layer.setStyle({fillOpacity: 0.7});
+//       useDistrictData(layer.options.id, layer);
+//     }
+//   });
+// }
 
 var map = L.map('map').setView([lat, lng], 12);
 
