@@ -67,13 +67,13 @@ var histogramConfig = {
     series: [{
         name: 'Regional Population %',
         dataLabels: {
-            enabled: true,
+            enabled: false,
             format: '{point.y:.1f}%'
         }
     },{
         name: 'City Population %',
         dataLabels: {
-            enabled: true,
+            enabled: false,
             format: '{point.y:.1f}%'
         }
     }],
