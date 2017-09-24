@@ -65,10 +65,10 @@ The following function is the function called in the event handlers that can be 
 
 function useDistrictData(districtId, district){
   // DO COOL STUFF HERE WITH THE DATA
-  console.log("District ID: " + districtId);
-  console.log("District Mean: " + district.options.mean);
+  // console.log("District ID: " + districtId);
+  // console.log("District Mean: " + district.options.mean);
   var data = currentSet.data[+districtId-1];
-  debugger
+  // debugger
   updateCharts(data);
   updateNumbers(data, currentSet);
 }
@@ -124,13 +124,24 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
     accessToken: 'your.mapbox.access.token'
 }).addTo(map);
 
+function getColor(value){
+    //value from 0 to 1
+    var hue = ((1 - value) * 120).toString(10);
+    return ["hsl(",hue,",100%,50%)"].join("");
+}
+
 function mapData(dataSet){
 
   dataSet.data.map(function(data){
+    var mean = data.score_mean;
+    var max = 40;
+    console.log(mean);
+    var color = getColor(mean / max);
+    console.log(mean / max);
     var polygon = L.polygon(data.coordinates, {
-      color: '#f03',
+      color: color,
       opacity: 0.5,
-      fillColor: '#f03',
+      fillColor: color,
       fillOpacity: 0.3,
       type: 'dataPoint',
       score49: data.score0_49,
